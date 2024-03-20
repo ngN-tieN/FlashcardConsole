@@ -1,0 +1,14 @@
+D:\FlashcardProjects\FlashcardApp\bin\Debug\net8.0\FlashcardApp.exe
+D:\FlashcardProjects\FlashcardApp\bin\Debug\net8.0\FlashcardApp.deps.json
+D:\FlashcardProjects\FlashcardApp\bin\Debug\net8.0\FlashcardApp.runtimeconfig.json
+D:\FlashcardProjects\FlashcardApp\bin\Debug\net8.0\FlashcardApp.dll
+D:\FlashcardProjects\FlashcardApp\bin\Debug\net8.0\FlashcardApp.pdb
+D:\FlashcardProjects\FlashcardApp\obj\Debug\net8.0\FlashcardApp.GeneratedMSBuildEditorConfig.editorconfig
+D:\FlashcardProjects\FlashcardApp\obj\Debug\net8.0\FlashcardApp.AssemblyInfoInputs.cache
+D:\FlashcardProjects\FlashcardApp\obj\Debug\net8.0\FlashcardApp.AssemblyInfo.cs
+D:\FlashcardProjects\FlashcardApp\obj\Debug\net8.0\FlashcardApp.csproj.CoreCompileInputs.cache
+D:\FlashcardProjects\FlashcardApp\obj\Debug\net8.0\FlashcardApp.dll
+D:\FlashcardProjects\FlashcardApp\obj\Debug\net8.0\refint\FlashcardApp.dll
+D:\FlashcardProjects\FlashcardApp\obj\Debug\net8.0\FlashcardApp.pdb
+D:\FlashcardProjects\FlashcardApp\obj\Debug\net8.0\FlashcardApp.genruntimeconfig.cache
+D:\FlashcardProjects\FlashcardApp\obj\Debug\net8.0\ref\FlashcardApp.dll
