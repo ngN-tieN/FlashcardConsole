@@ -5,12 +5,15 @@ internal class ConfigurationService
 {
     public static string GetSqlConnectionString(string rdbms)
     {
-        IConfiguration config = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json")
-            .Build();
+        
+            IConfiguration config = new ConfigurationBuilder()
+                .AddJsonFile("D:\\FlashcardProjects\\FlashcardApp\\appsettings.json")
+                .Build();
 
-        IConfigurationSection section = config.GetSection("Database");
-        return section[rdbms]; //Posible NULL, need checking 
+            IConfigurationSection section = config.GetSection("Database");
+            return section[rdbms];
+        
+        
     }
 
 
