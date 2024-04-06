@@ -1,5 +1,6 @@
 
 using Microsoft.Data.SqlClient;
+using Dapper;
 
 internal class MSSQLDatabase
 {
@@ -19,7 +20,7 @@ internal class MSSQLDatabase
 	                        )
                             END";
         TExecuteNonQuerySQL(command);
-        command = @"IF (OBJECT_ID('CARD') IS NULL AND OBJECT_ID('STACKS') IS NOT NULL)	
+        command = @"IF (OBJECT_ID('CARDS') IS NULL AND OBJECT_ID('STACKS') IS NOT NULL)	
                     BEGIN
                     CREATE TABLE CARDS
                     (
@@ -34,10 +35,25 @@ internal class MSSQLDatabase
     }
     public void TExecuteNonQuerySQL(string commandInput)
     {
-        using var connection = new SqlConnection(connectionString);
-        connection.Open();
-        var tableCmd = connection.CreateCommand();
-        tableCmd.CommandText = commandInput;
-        tableCmd.ExecuteNonQuery();
+        using(var connection = new SqlConnection(connectionString))
+        {
+            connection.Open();
+            using (var tableCmd = connection.CreateCommand())
+            {
+                tableCmd.CommandText = commandInput;
+                tableCmd.ExecuteNonQuery();
+            }
+        }
+        
+    }
+
+    public List<Stack> TDapperGetAllStack(string commandInput)
+    {
+        using (var connection = new SqlConnection(connectionString))
+        {
+            connection.Open();
+            return (List<Stack>)connection.Query<Stack>(commandInput);
+
+        }
     }
 }
