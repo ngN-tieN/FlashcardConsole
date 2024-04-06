@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "HwKC7er0/MfwPCktJAlVnfyZfypGk4Qdl78SEv/QZVerTpB/7nEf7FQ/20LzwDGAtWSRS2f3h+u8IPN/ZvKitA==",
+  "dgSpecHash": "uTVvxxFX0cP8kZ9K7VmYDyR9hNeScD8CcNqP1P5cySKpRO3seZEimxyypT50BtGwIsmMUnKgx2aXsrdLe0OAmA==",
   "success": true,
   "projectFilePath": "D:\\FlashcardProjects\\FlashcardApp\\FlashcardApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Tien\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\Tien\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
+    "C:\\Users\\Tien\\.nuget\\packages\\consoletableext\\3.2.0\\consoletableext.3.2.0.nupkg.sha512",
+    "C:\\Users\\Tien\\.nuget\\packages\\dapper\\2.1.37\\dapper.2.1.37.nupkg.sha512",
     "C:\\Users\\Tien\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\Tien\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\Tien\\.nuget\\packages\\microsoft.data.sqlclient\\5.2.0\\microsoft.data.sqlclient.5.2.0.nupkg.sha512",

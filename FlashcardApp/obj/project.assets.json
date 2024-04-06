@@ -46,6 +46,28 @@
           }
         }
       },
+      "ConsoleTableExt/3.2.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/ConsoleTableExt.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/ConsoleTableExt.dll": {}
+        }
+      },
+      "Dapper/2.1.37": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/Dapper.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/Dapper.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
         "type": "package",
         "compile": {
@@ -852,6 +874,43 @@
         "azureicon.png",
         "lib/netstandard2.0/Azure.Identity.dll",
         "lib/netstandard2.0/Azure.Identity.xml"
+      ]
+    },
+    "ConsoleTableExt/3.2.0": {
+      "sha512": "IhaHj6R2vSbb781aRXngan6nKRp8R5rnL2X5fL0uRW2wRiFyCIUh81T/QOih0//PjzoXMk2Uv4ayBAGDLH338A==",
+      "type": "package",
+      "path": "consoletableext/3.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "consoletableext.3.2.0.nupkg.sha512",
+        "consoletableext.nuspec",
+        "lib/net35/ConsoleTableExt.dll",
+        "lib/net46/ConsoleTableExt.dll",
+        "lib/netstandard2.0/ConsoleTableExt.dll"
+      ]
+    },
+    "Dapper/2.1.37": {
+      "sha512": "SJerIzPgxpwrqo1vozuQy1+8tgDr8QmGKjafkV5OSSMLcFmB8VW9JMAYzQW6pBEpgVHQtjK6dkw6gdcwTSB9pg==",
+      "type": "package",
+      "path": "dapper/2.1.37",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Dapper.png",
+        "dapper.2.1.37.nupkg.sha512",
+        "dapper.nuspec",
+        "lib/net461/Dapper.dll",
+        "lib/net461/Dapper.xml",
+        "lib/net5.0/Dapper.dll",
+        "lib/net5.0/Dapper.xml",
+        "lib/net6.0/Dapper.dll",
+        "lib/net6.0/Dapper.xml",
+        "lib/net7.0/Dapper.dll",
+        "lib/net7.0/Dapper.xml",
+        "lib/netstandard2.0/Dapper.dll",
+        "lib/netstandard2.0/Dapper.xml",
+        "readme.md"
       ]
     },
     "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
@@ -2355,6 +2414,8 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "ConsoleTableExt >= 3.2.0",
+      "Dapper >= 2.1.37",
       "Microsoft.Data.SqlClient >= 5.2.0",
       "Microsoft.Extensions.Configuration.Json >= 8.0.0"
     ]
@@ -2403,6 +2464,14 @@
       "net8.0": {
         "targetAlias": "net8.0",
         "dependencies": {
+          "ConsoleTableExt": {
+            "target": "Package",
+            "version": "[3.2.0, )"
+          },
+          "Dapper": {
+            "target": "Package",
+            "version": "[2.1.37, )"
+          },
           "Microsoft.Data.SqlClient": {
             "target": "Package",
             "version": "[5.2.0, )"
