@@ -4,13 +4,15 @@ class FlashcardApp
     public static void Main()
     {
         var dbService = new MSSQLDatabase();
+        var StackController = new StackController();
+
         dbService.ConnectToDB();
          
         bool closeApp = false;
         while(!closeApp)
         {
             Console.WriteLine("\n\n\t\t\tYOUR FLASHCARDS STACKS");
-            //GetAllStacks();
+            StackController.GetAllStacks();
             Console.WriteLine("\n\t\t\tWhat would you like to do?");
             Console.WriteLine("\nType 0 to close app.");
             Console.WriteLine("\nType stacks ID to access to stack.");
