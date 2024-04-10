@@ -33,6 +33,20 @@ internal class MSSQLDatabase
         TExecuteNonQuerySQL(command);
         
     }
+    public bool AddToStackTableSQL(string name)
+    {
+        if(IsExistInStackTableSQL(name)) return false; 
+        string commandInput = $"INSERT INTO STACKS (name) values ('{name}')";
+        TExecuteNonQuerySQL(commandInput);
+        return true;
+    }
+
+    public bool IsExistInStackTableSQL(string name)
+    {
+        string commandInput = $"select count(1) from STACKS where name='{name}'";
+        return TDapperExecuteScalarExist(commandInput);
+    }
+
     public void TExecuteNonQuerySQL(string commandInput)
     {
         using(var connection = new SqlConnection(connectionString))
@@ -56,4 +70,16 @@ internal class MSSQLDatabase
 
         }
     }
+
+    public bool TDapperExecuteScalarExist(string commandInput) //check if record exists in db 
+    {
+        using (var connection = new SqlConnection(connectionString))
+        {
+            connection.Open();
+            bool exist = connection.ExecuteScalar<bool>(commandInput);
+            return exist;
+        }
+    }
+
+
 }
