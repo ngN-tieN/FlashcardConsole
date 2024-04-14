@@ -27,6 +27,7 @@ internal class StackController
                 case "D":
                     break;
                 case "E":
+                    UpdateStackById();
                     break;
                 case "C":
                     CreateNewStack();
@@ -41,23 +42,52 @@ internal class StackController
     }
     public void GetAllStacks()
     {
-        string commandInput = "SELECT * FROM STACKS";
+        
+        string commandInput = "SELECT * FROM STACKS ORDER BY Id";
         var stacks = dbService.TDapperGetAllStack(commandInput);
         tableExtService.printStackTable(stacks);
     }
 
     public void CreateNewStack()
     {
-        string message = "Enter stack name";
-        string name = GetString(message);
-        if(!dbService.AddToStackTableSQL(name)) Console.WriteLine("Name already exist!");
+        string name = GetString("Enter stack name");
+        if(!dbService.AddToStackTableSQL(name)) 
+            Console.WriteLine("Name already exist!");
         return;
     }
 
+    public void UpdateStackById()
+    {
+        int id = GetInt("Enter stack ID");
+        if(!IsStackExistsById(id)) 
+        {
+            Console.WriteLine("ID not found");
+            return;
+        }
+
+        string name = GetString("Enter new stack name");
+        if(!UpdateStack(id:id,name:name))
+            Console.WriteLine("Name already exist");
+        return;
+    }
+    public bool IsStackExistsById(int id)
+    {
+        return dbService.IsRecordExistsById(id);
+    }
+    public bool UpdateStack(int id, string name)
+    {
+        return dbService.UpdateStack(id, name);
+    }
     internal String GetString(string msg)
     {
         Console.WriteLine(msg);
         return Console.ReadLine();
-
     }
+    internal int GetInt(string msg)
+    {
+        Console.WriteLine(msg);
+        int.TryParse(Console.ReadLine(), out int res);
+        return res;
+    }
+    
 }
