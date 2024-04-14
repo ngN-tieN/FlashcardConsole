@@ -35,18 +35,32 @@ internal class MSSQLDatabase
     }
     public bool AddToStackTableSQL(string name)
     {
-        if(IsExistInStackTableSQL(name)) return false; 
+        if(IsExistInStackTableSQLByName(name)) 
+            return false; 
         string commandInput = $"INSERT INTO STACKS (name) values ('{name}')";
         TExecuteNonQuerySQL(commandInput);
         return true;
     }
 
-    public bool IsExistInStackTableSQL(string name)
+    public bool IsRecordExistsById(int id)
+    {
+        string commandInput = $"select count(1) from STACKS where Id={id}";
+        return TDapperExecuteScalarExist(commandInput);
+    }
+    public bool IsExistInStackTableSQLByName(string name)
     {
         string commandInput = $"select count(1) from STACKS where name='{name}'";
         return TDapperExecuteScalarExist(commandInput);
     }
 
+    public bool UpdateStack(int id, string name)
+    {
+        if(IsExistInStackTableSQLByName(name)) 
+            return false; 
+        string commandInput = $"UPDATE STACKS SET name = '{name}' WHERE Id={id}";
+        TExecuteNonQuerySQL(commandInput);
+        return true;
+    }
     public void TExecuteNonQuerySQL(string commandInput)
     {
         using(var connection = new SqlConnection(connectionString))
