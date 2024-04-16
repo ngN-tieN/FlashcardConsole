@@ -84,6 +84,15 @@ internal class MSSQLDatabase
 
         }
     }
+    
+    public string TDapperGetStackNameById(int stackId)
+    {
+        using (var connection = new SqlConnection(connectionString))
+        {
+            connection.Open();
+            return connection.ExecuteScalar<string>($"SELECT name FROM STACKS WHERE Id={stackId}");
+        }
+    }
 
     public bool TDapperExecuteScalarExist(string commandInput) //check if record exists in db 
     {
