@@ -27,7 +27,7 @@ internal class StackController
                 case "D":
                     break;
                 case "E":
-                    UpdateStackById();
+                    UpdateStack();
                     break;
                 case "C":
                     CreateNewStack();
@@ -35,7 +35,7 @@ internal class StackController
                 default:
                     int stackId;
                     Int32.TryParse(options, out stackId);
-                    // ShowOptionStack(int stackId);
+                    SelectStack(stackId);
                     break;
             }
         }      
@@ -50,34 +50,52 @@ internal class StackController
 
     public void CreateNewStack()
     {
+        Console.Clear();
         string name = GetString("Enter stack name");
         if(!dbService.AddToStackTableSQL(name)) 
             Console.WriteLine("Name already exist!");
         return;
     }
 
-    public void UpdateStackById()
+    public void UpdateStack()
     {
-        int id = GetInt("Enter stack ID");
-        if(!IsStackExistsById(id)) 
+        Console.Clear();
+        int stackId = GetInt("Enter stack ID");
+        if(!IsStackExistsById(stackId)) 
         {
             Console.WriteLine("ID not found");
             return;
         }
 
-        string name = GetString("Enter new stack name");
-        if(!UpdateStack(id:id,name:name))
+        string stackName = GetString("Enter new stack name");
+        if(!UpdateStackById(stackId:stackId,stackName:stackName))
             Console.WriteLine("Name already exist");
         return;
     }
-    public bool IsStackExistsById(int id)
+    public bool IsStackExistsById(int stackId)
     {
-        return dbService.IsRecordExistsById(id);
+        return dbService.IsRecordExistsById(stackId);
     }
-    public bool UpdateStack(int id, string name)
+    public bool UpdateStackById(int stackId, string stackName)
     {
-        return dbService.UpdateStack(id, name);
+        return dbService.UpdateStack(stackId, stackName);
     }
+    public string GetStackNameById(int stackId)
+    {
+        return dbService.TDapperGetStackNameById(stackId);
+    }
+    public void SelectStack(int stackId)
+    {
+        Console.Clear();
+        if(!IsStackExistsById(stackId)) 
+        {
+            Console.WriteLine("ID not found");
+            return;
+        }
+        var FlashcardController = new FlashcardController();
+        string stackName = GetStackNameById(stackId);
+        FlashcardController.ShowFlashcardControllerOptions(stackId, stackName);
+    }    
     internal String GetString(string msg)
     {
         Console.WriteLine(msg);
