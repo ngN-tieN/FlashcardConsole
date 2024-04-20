@@ -2,36 +2,12 @@
 using Microsoft.Data.SqlClient;
 using Dapper;
 
-internal class MSSQLDatabase
+internal class MSSQLDatabaseStack
 {
     string connectionString;
-    public MSSQLDatabase()
+    public MSSQLDatabaseStack()
     {
         this.connectionString = ConfigurationService.GetSqlConnectionString("mssql");
-    }
-    public void ConnectToDB()
-    {
-        string command = @"IF OBJECT_ID('STACKS') IS NULL
-                            BEGIN
-	                        CREATE TABLE STACKS
-	                        (
-		                        id INT PRIMARY KEY NOT NULL IDENTITY(1,1),
-		                        name varchar(255) unique
-	                        )
-                            END";
-        TExecuteNonQuerySQL(command);
-        command = @"IF (OBJECT_ID('CARDS') IS NULL AND OBJECT_ID('STACKS') IS NOT NULL)	
-                    BEGIN
-                    CREATE TABLE CARDS
-                    (
-                        id INT PRIMARY KEY NOT NULL IDENTITY(1,1),
-                        front TEXT,
-                        back TEXT, 
-                        stack_id INT FOREIGN KEY REFERENCES STACKS(id)
-                    )
-                    END";
-        TExecuteNonQuerySQL(command);
-        
     }
     public bool AddToStackTableSQL(string name)
     {
@@ -84,7 +60,12 @@ internal class MSSQLDatabase
 
         }
     }
-    
+    public void DeleteStack(int stackId)
+    {
+        string commandInput = $"DELETE FROM STACKS WHERE Id={stackId}";
+        TExecuteNonQuerySQL(commandInput);
+
+    }
     public string TDapperGetStackNameById(int stackId)
     {
         using (var connection = new SqlConnection(connectionString))

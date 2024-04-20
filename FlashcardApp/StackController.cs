@@ -1,8 +1,8 @@
 using Microsoft.VisualBasic;
-
+using static Utils.GetFromConsole;
 internal class StackController
 {
-    private MSSQLDatabase dbService = new();
+    private MSSQLDatabaseStack dbService = new();
     private TableExt tableExtService = new();
     public void ShowStackControllerOptions()
     {
@@ -25,6 +25,7 @@ internal class StackController
                     stop = true;
                     break;
                 case "D":
+                    DeleteStack();
                     break;
                 case "E":
                     UpdateStack();
@@ -60,7 +61,7 @@ internal class StackController
     public void UpdateStack()
     {
         Console.Clear();
-        int stackId = GetInt("Enter stack ID");
+        int stackId = GetInt("Enter stack ID: ");
         if(!IsStackExistsById(stackId)) 
         {
             Console.WriteLine("ID not found");
@@ -71,6 +72,19 @@ internal class StackController
         if(!UpdateStackById(stackId:stackId,stackName:stackName))
             Console.WriteLine("Name already exist");
         return;
+    }
+
+    public void DeleteStack()
+    {
+        Console.Clear();
+        int stackId = GetInt("Enter stack ID: ");
+        if(!IsStackExistsById(stackId)) 
+        {
+            Console.WriteLine("ID not found");
+            return;
+        }
+        dbService.DeleteStack(stackId);
+
     }
     public bool IsStackExistsById(int stackId)
     {
@@ -96,16 +110,6 @@ internal class StackController
         string stackName = GetStackNameById(stackId);
         FlashcardController.ShowFlashcardControllerOptions(stackId, stackName);
     }    
-    internal String GetString(string msg)
-    {
-        Console.WriteLine(msg);
-        return Console.ReadLine();
-    }
-    internal int GetInt(string msg)
-    {
-        Console.WriteLine(msg);
-        int.TryParse(Console.ReadLine(), out int res);
-        return res;
-    }
+    
     
 }
