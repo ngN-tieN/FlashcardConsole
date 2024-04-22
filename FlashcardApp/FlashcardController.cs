@@ -1,7 +1,7 @@
 using static Utils.GetFromConsole;
 internal class FlashcardController
 {
-    private MSSQLDatabaseFlashcard dbService = new();
+    private DatabaseServiceFlashcard dbService = new();
     private TableExt tableExtService = new();
     public void ShowFlashcardControllerOptions(int stackID, string stackName)
     {

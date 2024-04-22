@@ -2,7 +2,7 @@ using Microsoft.VisualBasic;
 using static Utils.GetFromConsole;
 internal class StackController
 {
-    private MSSQLDatabaseStack dbService = new();
+    private DatabaseServiceStack dbService = new();
     private TableExt tableExtService = new();
     public void ShowStackControllerOptions()
     {
@@ -31,7 +31,7 @@ internal class StackController
                     UpdateStack();
                     break;
                 case "C":
-                    CreateNewStack();
+                    CreateStack();
                     break;
                 default:
                     int stackId;
@@ -45,15 +45,15 @@ internal class StackController
     {
         
         string commandInput = "SELECT * FROM STACKS ORDER BY Id";
-        var stacks = dbService.TDapperGetAllStack(commandInput);
+        var stacks = dbService.GetAllStack(commandInput);
         tableExtService.printStackTable(stacks);
     }
 
-    public void CreateNewStack()
+    public void CreateStack()
     {
         Console.Clear();
         string name = GetString("Enter stack name");
-        if(!dbService.AddToStackTableSQL(name)) 
+        if(!dbService.CreateStack(name)) 
             Console.WriteLine("Name already exist!");
         return;
     }
@@ -96,7 +96,7 @@ internal class StackController
     }
     public string GetStackNameById(int stackId)
     {
-        return dbService.TDapperGetStackNameById(stackId);
+        return dbService.DapperGetStackNameById(stackId);
     }
     public void SelectStack(int stackId)
     {

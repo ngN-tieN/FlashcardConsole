@@ -4,7 +4,7 @@ class FlashcardApp
 {
     public static void Main()
     {
-        var dbService = new MSSQLDatabase();
+        DatabaseInit dbService = new ();
         var StackController = new StackController();
 
         dbService.ConnectToDB();
