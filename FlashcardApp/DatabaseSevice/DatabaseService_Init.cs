@@ -26,6 +26,17 @@ class DatabaseInit:DatabaseService
                     )
                     END";
         ExecuteNonQuerySQL(command);
+        command = @"IF (OBJECT_ID('STUDY_SESSIONS') IS NULL AND OBJECT_ID('STACKS') IS NOT NULL)	
+                    BEGIN
+                    CREATE TABLE STUDY_SESSIONS
+                    (
+                        id INT PRIMARY KEY NOT NULL IDENTITY(1,1),
+                        score int,
+                        date TIMESTAMP, 
+                        stack_id INT FOREIGN KEY REFERENCES STACKS(id) ON DELETE CASCADE
+                    )
+                    END";
+        ExecuteNonQuerySQL(command);
         
     }
     public void ExecuteNonQuerySQL(string commandInput)

@@ -16,7 +16,6 @@ internal class FlashcardController
             Console.WriteLine("\nType C to create new card.");
             Console.WriteLine("\nType D to delete card.");
             Console.WriteLine("\nType E to update card.");
-            Console.WriteLine("\nType S to study stack.");
             string options = Console.ReadLine(); 
             
             switch(options.Trim().ToUpper())
@@ -87,7 +86,7 @@ internal class FlashcardController
         }
         return displayCardsList;
     }
-
+    
     public void UpdateCard(int stackID, string stackName)
     {
         Console.Clear();

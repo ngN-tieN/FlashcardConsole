@@ -16,7 +16,9 @@ internal class StackController
             Console.WriteLine("\nType C to create new stack.");
             Console.WriteLine("\nType D to delete stack.");
             Console.WriteLine("\nType E to update stack.");
-            Console.WriteLine("\nType stacks ID to access to stack.");
+            Console.WriteLine("\nType S to study stack.");
+            Console.WriteLine("\nType V to view all study sessions.");
+            Console.WriteLine("\nType stack ID to access to stack.");
             string options = Console.ReadLine(); 
             
             switch(options.Trim().ToUpper())
@@ -32,6 +34,9 @@ internal class StackController
                     break;
                 case "C":
                     CreateStack();
+                    break;
+                case "S":
+                    StudyStack();
                     break;
                 default:
                     int stackId;
@@ -110,6 +115,20 @@ internal class StackController
         string stackName = GetStackNameById(stackId);
         FlashcardController.ShowFlashcardControllerOptions(stackId, stackName);
     }    
-    
-    
+    public void StudyStack()
+    {
+        Console.Clear();
+        int stackId = GetInt("Type stack ID to study stack. ");
+        if(!IsStackExistsById(stackId)) 
+        {
+            Console.WriteLine("ID not found");
+            return;
+        }
+        string stackName = GetStackNameById(stackId);
+        var QuizController = new QuizController();
+        var quizzesList = QuizController.GetAllQuizzes(stackId);
+        var StudySessionController = new StudySessionController();
+        StudySessionController.StudyStack(stackId, stackName, quizzesList);
+    }
+
 }
