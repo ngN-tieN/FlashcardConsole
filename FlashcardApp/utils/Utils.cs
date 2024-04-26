@@ -14,7 +14,21 @@ class GetFromConsole
     }
   
 }
-
+class Wait
+{
+    public static void WaitForExit()
+    {
+        bool tag = true;
+        while (tag == true)
+        {
+            Console.WriteLine("Enter 0 to return");
+            if (Console.ReadLine().Equals("0"))
+            {
+                tag = false;
+            }
+        }
+    }
+}
 static class RandomShuffle
 {
     public static void Shuffle<T>(this IList<T> list)  

@@ -1,8 +1,9 @@
 using static Utils.GetFromConsole;
+using static Utils.TableExt;
+using static Utils.Wait;
 internal class FlashcardController
 {
     private DatabaseServiceFlashcard dbService = new();
-    private TableExt tableExtService = new();
     public void ShowFlashcardControllerOptions(int stackID, string stackName)
     {
         Console.Clear();
@@ -57,6 +58,8 @@ internal class FlashcardController
        
         
         dbService.DeleteCard(cardID);
+        WaitForExit();
+
     }
     public void CreateNewCard(int stackID)
     {
@@ -64,6 +67,7 @@ internal class FlashcardController
         string front = GetString("Enter Front:");
         string back = GetString("Enter Back:");
         dbService.CreateNewCard(front, back, stackID);
+        WaitForExit();
 
     }
     public List<CardDisplayDTO> GetAllCards(int stackID, string stackName)
@@ -71,8 +75,9 @@ internal class FlashcardController
         Console.Clear();
         var cardsList = dbService.GetAllCards(stackID);
         var displayCardsList = AppendDisplayId(cardsList);
-        tableExtService.printCardsTable(displayCardsList, stackName);
+        printCardsTable(displayCardsList, stackName);
         return displayCardsList;
+        
 
     }
     
@@ -102,7 +107,7 @@ internal class FlashcardController
         string front = GetString("Enter Front to update");
         string back = GetString("Enter back to update");
         dbService.UpdateCard(cardID, front, back);
-
+        WaitForExit();
 
     }
 

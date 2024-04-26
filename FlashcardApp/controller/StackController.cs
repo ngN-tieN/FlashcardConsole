@@ -1,14 +1,16 @@
 using Microsoft.VisualBasic;
 using static Utils.GetFromConsole;
+using static Utils.TableExt;
+using static Utils.Wait;
 internal class StackController
 {
     private DatabaseServiceStack dbService = new();
-    private TableExt tableExtService = new();
     public void ShowStackControllerOptions()
     {
         bool stop = false;
         while(!stop)
         {
+            Console.Clear();
             Console.WriteLine("\n\n\t\t\tYOUR FLASHCARDS STACKS");
             GetAllStacks();
             Console.WriteLine("\n\t\t\tWhat would you like to do?");
@@ -49,9 +51,8 @@ internal class StackController
     public void GetAllStacks()
     {
         
-        string commandInput = "SELECT * FROM STACKS ORDER BY Id";
-        var stacks = dbService.GetAllStack(commandInput);
-        tableExtService.printStackTable(stacks);
+        var stacks = dbService.GetAllStack();
+        printStackTable(stacks);
     }
 
     public void CreateStack()
@@ -76,7 +77,7 @@ internal class StackController
         string stackName = GetString("Enter new stack name");
         if(!UpdateStackById(stackId:stackId,stackName:stackName))
             Console.WriteLine("Name already exist");
-        return;
+        WaitForExit();
     }
 
     public void DeleteStack()
@@ -89,6 +90,7 @@ internal class StackController
             return;
         }
         dbService.DeleteStack(stackId);
+        WaitForExit();
 
     }
     public bool IsStackExistsById(int stackId)
@@ -118,6 +120,7 @@ internal class StackController
     public void StudyStack()
     {
         Console.Clear();
+        GetAllStacks();
         int stackId = GetInt("Type stack ID to study stack. ");
         if(!IsStackExistsById(stackId)) 
         {

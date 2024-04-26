@@ -13,8 +13,9 @@ class DatabaseServiceStack:DatabaseServiceCRUD
         DapperExecuteNonQuerySQL(commandInput);
         return true;
     }
-    public List<Stack> GetAllStack(string commandInput)
+    public List<Stack> GetAllStack()
     {
+        string commandInput = "SELECT * FROM STACKS ORDER BY Id";
         using (var connection = new SqlConnection(this.GetConnectionString()))
         {
             connection.Open();
