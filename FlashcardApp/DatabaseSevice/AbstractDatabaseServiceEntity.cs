@@ -1,6 +1,6 @@
 using Microsoft.Data.SqlClient;
 using Dapper;
-abstract class DatabaseServiceCRUD:DatabaseService, IDapperDatabaseService
+abstract class AbstractDatabaseServiceEntity:AbstractDatabaseService, IDapperDatabaseService
 {
 
     public void DapperExecuteNonQuerySQL(string sql)
@@ -9,6 +9,14 @@ abstract class DatabaseServiceCRUD:DatabaseService, IDapperDatabaseService
         {
             var affectedRows =  connection.Execute(sql);
 	        Console.WriteLine($"Affected Rows: {affectedRows}");
+        }
+
+    }
+    public void DapperExecuteNonQuerySQLSilent(string sql)
+    {
+        using(var connection = new SqlConnection(this.GetConnectionString()))
+        {
+            var affectedRows =  connection.Execute(sql);
         }
 
     }

@@ -1,7 +1,7 @@
 using Microsoft.Data.SqlClient;
 
 
-class DatabaseInit:DatabaseService
+class DatabaseInit:AbstractDatabaseService
 {
     
     public void ConnectToDB()
@@ -32,7 +32,7 @@ class DatabaseInit:DatabaseService
                     (
                         id INT PRIMARY KEY NOT NULL IDENTITY(1,1),
                         score int,
-                        date TIMESTAMP, 
+                        date DATETIME DEFAULT GETDATE(), 
                         stack_id INT FOREIGN KEY REFERENCES STACKS(id) ON DELETE CASCADE
                     )
                     END";

@@ -2,7 +2,7 @@
 using Microsoft.Data.SqlClient;
 using Dapper;
 
-class DatabaseServiceStack:DatabaseServiceCRUD
+class DatabaseServiceStack:AbstractDatabaseServiceEntity
 {
     
     public bool CreateStack(string name)
@@ -23,23 +23,23 @@ class DatabaseServiceStack:DatabaseServiceCRUD
 
         }
     }
-    public bool UpdateStack(int id, string name)
+    public bool UpdateStack(string oldName, string newName)
     {
-        if(IsExistInStackTableSQLByName(name)) 
+        if(IsExistInStackTableSQLByName(newName)) 
             return false; 
-        string commandInput = $"UPDATE STACKS SET name = '{name}' WHERE Id={id}";
+        string commandInput = $"UPDATE STACKS SET name = '{newName}' WHERE name = '{oldName}' ";
         DapperExecuteNonQuerySQL(commandInput);
         return true;
     }
-    public void DeleteStack(int stackId)
+    public void DeleteStack(string stackName)
     {
-        string commandInput = $"DELETE FROM STACKS WHERE Id={stackId}";
+        string commandInput = $"DELETE FROM STACKS WHERE name = '{stackName}'";
         DapperExecuteNonQuerySQL(commandInput);
 
     }
-    public bool IsRecordExistsById(int id)
+    public bool IsRecordExistsByName(string name)
     {
-        string commandInput = $"select count(1) from STACKS where Id={id}";
+        string commandInput = $"select count(1) from STACKS where name='{name}'";
         return DapperExecuteScalarExist(commandInput);
     }
     public bool IsExistInStackTableSQLByName(string name)
@@ -53,12 +53,12 @@ class DatabaseServiceStack:DatabaseServiceCRUD
     
 
 
-    public string DapperGetStackNameById(int stackId)
+    public int DapperGetStackIDByName(string name)
     {
         using (var connection = new SqlConnection(this.GetConnectionString()))
         {
             connection.Open();
-            return connection.ExecuteScalar<string>($"SELECT name FROM STACKS WHERE Id={stackId}");
+            return connection.ExecuteScalar<int>($"SELECT id FROM STACKS WHERE name='{name}'");
         }
     }
 

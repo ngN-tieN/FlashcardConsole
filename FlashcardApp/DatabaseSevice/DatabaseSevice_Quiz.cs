@@ -1,6 +1,6 @@
 using Microsoft.Data.SqlClient;
 using Dapper;
-class DatabaseServiceQuiz:DatabaseServiceCRUD
+class DatabaseServiceQuiz:AbstractDatabaseServiceEntity
 {
     public List<StudyCardDTO> GetAllQuizzes(int stackID)
     {

@@ -1,9 +1,9 @@
 using Dapper;
 using Microsoft.Data.SqlClient;
-abstract class DatabaseService
+abstract class AbstractDatabaseService
 {
     private string connectionString;
-    public DatabaseService()
+    public AbstractDatabaseService()
     {
         this.connectionString = ConfigurationService.GetSqlConnectionString("mssql");
     }

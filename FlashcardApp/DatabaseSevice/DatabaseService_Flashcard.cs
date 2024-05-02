@@ -1,7 +1,7 @@
 using Microsoft.Data.SqlClient;
 using Dapper;
 
-class DatabaseServiceFlashcard:DatabaseServiceCRUD
+class DatabaseServiceFlashcard:AbstractDatabaseServiceEntity
 {
     
     public void CreateNewCard(string front, string back, int stackId)
