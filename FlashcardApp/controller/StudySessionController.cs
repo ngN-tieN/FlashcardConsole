@@ -4,14 +4,38 @@ using static Utils.TableExt;
 using static Utils.Wait;
 class StudySessionController
 {
+    private DatabaseServiceStudySession dbService = new();
     public void StudyStack(int stackId, string stackName, List<StudyCardDTO> quizzesList)
     {
         quizzesList = GenerateRandomQuestions(quizzesList);
-        DoQuizzez(quizzesList);
-        
+        int score = DoQuizzez(quizzesList);
+        SaveSession(stackId, score);
+        WaitForExit();
     }
     
-    public void DoQuizzez(List<StudyCardDTO> quizzesList)
+    public void SaveSession(int stackId, int score)
+    {
+        Console.WriteLine("Saving Session.....");
+        dbService.CreateSession(stackId, score);
+    }
+
+    public List<StudySessionDTO> GetAllSession()
+    {
+        Console.Clear();
+        return dbService.GetAllSession();
+    }
+
+    public List<SummaryDTO> SummaryBySessionsPerMonth(int year)
+    {
+        Console.Clear();
+        return dbService.SummaryBySessionsPerMonth(year);
+    }
+    public List<SummaryDTO> SummaryByAvgScorePerMonth(int year)
+    {
+        Console.Clear();
+        return dbService.SummaryByAvgScorePerMonth(year);
+    }
+    public int DoQuizzez(List<StudyCardDTO> quizzesList)
     {
         
         int score = 0;
@@ -34,7 +58,8 @@ class StudySessionController
             
         }
         Console.WriteLine($"You scored {score} out of {quizzesList.Count}.");
-        WaitForExit();
+        return score;
+        
 
 
     }
@@ -51,10 +76,5 @@ class StudySessionController
         quizzesList.Shuffle();
         return quizzesList;
     }
-    /*to do list 
-    calculate score
-    print score
-    input answer
-    check answer
-    print Quest*/
+    
 }

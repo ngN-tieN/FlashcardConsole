@@ -20,7 +20,7 @@ internal class StackController
             Console.WriteLine("\nType E to update stack.");
             Console.WriteLine("\nType S to study stack.");
             Console.WriteLine("\nType V to view all study sessions.");
-            Console.WriteLine("\nType stack ID to access to stack.");
+            Console.WriteLine("\nType stack name to access to stack.");
             string options = Console.ReadLine(); 
             
             switch(options.Trim().ToUpper())
@@ -40,10 +40,11 @@ internal class StackController
                 case "S":
                     StudyStack();
                     break;
+                case "V":
+                    ViewAllSessions();
+                    break;
                 default:
-                    int stackId;
-                    Int32.TryParse(options, out stackId);
-                    SelectStack(stackId);
+                    SelectStack(options);
                     break;
             }
         }      
@@ -67,15 +68,16 @@ internal class StackController
     public void UpdateStack()
     {
         Console.Clear();
-        int stackId = GetInt("Enter stack ID: ");
-        if(!IsStackExistsById(stackId)) 
+        string stackName = GetString("Enter stack name: ");
+        if(!IsStackExistsByName(stackName)) 
         {
-            Console.WriteLine("ID not found");
+            Console.WriteLine("Name not found");
+            WaitForExit();
             return;
         }
 
-        string stackName = GetString("Enter new stack name");
-        if(!UpdateStackById(stackId:stackId,stackName:stackName))
+        string newStackName = GetString("Enter new stack name");
+        if(!UpdateStackByName(stackName, newStackName))
             Console.WriteLine("Name already exist");
         WaitForExit();
     }
@@ -83,55 +85,106 @@ internal class StackController
     public void DeleteStack()
     {
         Console.Clear();
-        int stackId = GetInt("Enter stack ID: ");
-        if(!IsStackExistsById(stackId)) 
+        string stackName = GetString("Enter stack name: ");
+        if(!IsStackExistsByName(stackName)) 
         {
-            Console.WriteLine("ID not found");
+            Console.WriteLine("Name not found");
+            WaitForExit();
             return;
         }
-        dbService.DeleteStack(stackId);
+
+        dbService.DeleteStack(stackName);
         WaitForExit();
 
     }
-    public bool IsStackExistsById(int stackId)
+    public bool IsStackExistsByName(string stackName)
     {
-        return dbService.IsRecordExistsById(stackId);
+        return dbService.IsRecordExistsByName(stackName);
     }
-    public bool UpdateStackById(int stackId, string stackName)
+    public bool UpdateStackByName(string oldName, string newName)
     {
-        return dbService.UpdateStack(stackId, stackName);
+        return dbService.UpdateStack(oldName, newName);
     }
-    public string GetStackNameById(int stackId)
-    {
-        return dbService.DapperGetStackNameById(stackId);
-    }
-    public void SelectStack(int stackId)
+    
+    public void SelectStack(string stackName)
     {
         Console.Clear();
-        if(!IsStackExistsById(stackId)) 
+        if(!IsStackExistsByName(stackName)) 
         {
-            Console.WriteLine("ID not found");
+            Console.WriteLine("Name not found");
+            WaitForExit();
             return;
         }
+        int stackId = dbService.DapperGetStackIDByName(stackName);
         var FlashcardController = new FlashcardController();
-        string stackName = GetStackNameById(stackId);
         FlashcardController.ShowFlashcardControllerOptions(stackId, stackName);
     }    
     public void StudyStack()
     {
         Console.Clear();
         GetAllStacks();
-        int stackId = GetInt("Type stack ID to study stack. ");
-        if(!IsStackExistsById(stackId)) 
+        string stackName = GetString("Type stack name to study stack.");
+        if(!IsStackExistsByName(stackName)) 
         {
-            Console.WriteLine("ID not found");
+            Console.WriteLine("Name not found");
+            WaitForExit();
             return;
         }
-        string stackName = GetStackNameById(stackId);
+        int stackId = dbService.DapperGetStackIDByName(stackName);
+
         var QuizController = new QuizController();
         var quizzesList = QuizController.GetAllQuizzes(stackId);
         var StudySessionController = new StudySessionController();
         StudySessionController.StudyStack(stackId, stackName, quizzesList);
+    }
+    public void ViewAllSessions()
+    {
+        Console.Clear();
+        var StudySessionController = new StudySessionController();
+        bool stop = false;
+        while(!stop)
+        {
+            Console.Clear();
+            Console.WriteLine("\n\n\t\t\tView Session");
+            GetAllStacks();
+            Console.WriteLine("\n\t\t\tWhat would you like to do?");
+            Console.WriteLine("\nType 0 to return to main menu.");
+            Console.WriteLine("\nType 1 to View all session.");
+            Console.WriteLine("\nType 2 to View summary sessions per month.");
+            Console.WriteLine("\nType 3 to View average score per month.");
+            string options = GetString("Please enter your option");
+            int year;
+            string[] month = ["Stack Name","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+            switch(options)
+            {
+                case "1":
+                    var sessionsList = StudySessionController.GetAllSession();
+                    printSessionsTable(sessionsList, "Study Sessions");
+                    WaitForExit();
+                    break;
+                case "2":
+                    year = GetInt("Enter a year in format YYYY");
+                    var summaryListSession = StudySessionController.SummaryBySessionsPerMonth(year);
+                    
+                    printSummaryTable(summaryListSession, $"Sessions per month for {year}", month);
+                    WaitForExit();
+                    break;
+                case "3":
+                    year = GetInt("Enter a year in format YYYY");
+                    var summaryListSessionAVG = StudySessionController.SummaryByAvgScorePerMonth(year);
+                    printSummaryTable(summaryListSessionAVG, $"Average scores per month for {year}", month);
+                    WaitForExit();
+                    break;
+                case "0":
+                    stop = true;
+                    break;
+                default:
+                    Console.WriteLine("Option not found!");
+                    WaitForExit();
+                    break;
+            }
+        }
+        
     }
 
 }
