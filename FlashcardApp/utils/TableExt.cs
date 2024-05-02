@@ -22,6 +22,15 @@ class TableExt
         printTable(tableData, stackName, "Front");
     }
     
+    public static void printSessionsTable(List<StudySessionDTO> sessionsList, string tableName)
+    {
+        printTable(sessionsList, tableName, "ID", "Score", "Date", "Stack");
+    }
+    public static void printSummaryTable(List<SummaryDTO> sessionsList, string tableName, string[] columns)
+    {
+        printTable(sessionsList, tableName, columns);
+    }
+
     public static void printTable<T>(List<T> tableData, string tableName, params string[] columns) where T:class
     {
         ConsoleTableBuilder
@@ -34,7 +43,11 @@ class TableExt
         })
         .WithTextAlignment(new Dictionary<int, TextAligntment>
         {
-            {2, TextAligntment.Right }
+            {0, TextAligntment.Center },
+            {1, TextAligntment.Center },
+            {2, TextAligntment.Center },
+            {3, TextAligntment.Center },
+            {4, TextAligntment.Center }
         })
         .WithCharMapDefinition(new Dictionary<CharMapPositions, char> {
             {CharMapPositions.BottomLeft, '=' },

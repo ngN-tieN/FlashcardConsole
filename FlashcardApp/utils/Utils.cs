@@ -10,7 +10,7 @@ class GetFromConsole
     public static String GetString(string msg)
     {
         Console.WriteLine(msg);
-        return Console.ReadLine();
+        return Console.ReadLine().Trim().ToLower();
     }
   
 }
