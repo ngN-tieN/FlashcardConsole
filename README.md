@@ -7,7 +7,7 @@ Techs used: C# with .NET 8.0, MS SQL SERVER, Dapper
     -   Using local db feature of MS SQL Server Express
     -   Check if the table doesn't exist, creates one
 - A console UI 
-    - ![]("/README assets/Screenshot 2024-05-07 193619.png")
+    - ![a]("/README assets/Screenshot 2024-05-07 193619.png")
 - Crud Functions
     -   User can Create, Read, Delete, Update whichever Stack or Flashcard they want
     -   Create Study Session record automatically when finishes a study mode sessions
