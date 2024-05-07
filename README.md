@@ -14,7 +14,9 @@ Techs used: C# with .NET 8.0, MS SQL SERVER, Dapper
     -   Create Study Session record automatically when finishes a study mode sessions
 - Report
     -   Report the study session by sessions per month
+    - ![Study Sessions per month](/assets/SeesionPerMonth.png)
     -   Report the study session by average score per session per month
+    - ![Average Scores per month](/assets//AVGScoresPerMonth.png)
 - Table
     -   Reporting and other data output uses ConsoleTableExt library (check [`Resource used`](#resource-used)) to output in a more pleasant way
 
